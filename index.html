@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boleto 3D</title>
+    <style>
+        /* Contenedor del boleto */
+        .ticket-container {
+            perspective: 1000px;
+            width: 300px;
+            height: 500px;
+            margin: 50px auto;
+        }
+
+        /* Boleto y su giro */
+        .ticket {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+            transition: transform 0.6s;
+        }
+
+        /* Efecto hover para girar el boleto */
+        .ticket-container:hover .ticket {
+            transform: rotateY(180deg);
+        }
+
+        /* Estilo de cada lado del boleto */
+        .side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Parte frontal del boleto */
+        .front {
+            background-image: url('https://i.pinimg.com/474x/a0/c8/56/a0c8565ef104c574bc796960b3208656.jpg');
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Parte trasera del boleto */
+        .back {
+            background-color: #b78bc2;
+            color: #fff;
+            transform: rotateY(180deg);
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Encabezado */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ddd;
+            margin-bottom: 5px;
+        }
+
+        .header img {
+            height: 35px;
+        }
+
+        /* Título en la parte trasera */
+        .title h1 {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            color: #ffffff;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+            margin: 5px 0;
+            letter-spacing: 1px;
+        }
+
+        /* Estilo de la línea divisoria */
+        .divider {
+            width: 100%;
+            height: 1px;
+            background-color: #ccc;
+            margin: 8px 0;
+            opacity: 0.6;
+        }
+
+        /* Información del evento */
+        .info {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            flex-grow: 1; /* Permite que este contenedor ocupe el espacio disponible */
+        }
+
+        .info p {
+            margin: 3px 0;
+            color: #e0e0e0;
+        }
+
+        .info p strong {
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        /* Cuenta regresiva */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            margin: 5px 0;
+            gap: 4px;
+        }
+
+        .countdown div {
+            font-size: 16px;
+            padding: 6px;
+            background-color: #704141;
+            border-radius: 6px;
+            color: #fff;
+            text-align: center;
+            width: 35px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Contenedor para evento especial y QR */
+        .event-qr-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px; /* Ajustar margen superior */
+        }
+
+        /* Evento especial en la izquierda */
+        .special-event {
+            font-size: 12px;
+            color: #ddd;
+            text-align: left;
+            padding-left: 5px;
+        }
+
+        .special-event p {
+            margin: 0;
+        }
+
+        /* QR y redes sociales */
+        .qr-social {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            color: #ddd;
+        }
+
+        .qr {
+            background: #ffffff;
+            color: #5a2828;
+            padding: 8px;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            font-size: 10px;
+        }
+
+        .qr-image {
+            width: 60px;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+<div class="ticket-container">
+    <div class="ticket">
+        <!-- Parte frontal del boleto -->
+        <div class="side front">
+            <div class="image-front"></div>
+        </div>
+        
+        <!-- Parte trasera del boleto -->
+        <div class="side back">
+            <!-- Encabezado -->
+            <div class="header">
+              <span>BIGHIT MUSIC</span>
+              <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
+              <span>BTS 2023</span>
+            </div>
+        
+            <!-- Título -->
+            <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
+            <div class="divider"></div>
+            
+            <!-- Información del evento -->
+            <div class="info">
+              <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
+              <p><strong>HORA:</strong> 8 PM</p>
+              <p><strong>DURACIÓN:</strong> 76 minutos</p>
+              <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+            </div>
+            
+            <!-- Cuenta regresiva -->
+            <div class="countdown">
+              <div>06</div>
+              <div>13</div>
+              <div>07</div>
+              <div>43</div>
+            </div>
+
+            <!-- Contenedor para evento especial y QR -->
+            <div class="event-qr-container">
+                <!-- Evento especial y usuario en el lado izquierdo -->
+                <div class="special-event">
+                    <p>EVENTO ESPECIAL</p>
+                    <p>@helt99</p>
+                </div>
+            
+                <!-- QR y redes sociales alineados a la derecha -->
+                <div class="qr-social">
+                  <div class="qr">SCAN ME</div>
+                  <img src="https://i.pinimg.com/564x/d8/11/10/d81110f74b45542aa26eddc290592ed8.jpg" alt="QR Code" class="qr-image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
