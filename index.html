@@ -5,12 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Boleto 3D</title>
     <style>
+        /* Contenedor principal para alinear los boletos en fila */
+        .tickets-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Espacio entre los boletos */
+            margin-top: 50px;
+        }
+
         /* Contenedor del boleto */
         .ticket-container {
             perspective: 1000px;
             width: 300px;
             height: 500px;
-            margin: 50px auto;
         }
 
         /* Boleto y su giro */
@@ -41,7 +48,6 @@
 
         /* Parte frontal del boleto */
         .front {
-            background-image: url('https://i.pinimg.com/474x/a0/c8/56/a0c8565ef104c574bc796960b3208656.jpg');
             background-size: cover;
             display: flex;
             align-items: center;
@@ -102,7 +108,7 @@
             font-size: 14px;
             line-height: 1.4;
             margin-bottom: 10px;
-            flex-grow: 1; /* Permite que este contenedor ocupe el espacio disponible */
+            flex-grow: 1;
         }
 
         .info p {
@@ -139,7 +145,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 10px; /* Ajustar margen superior */
+            margin-top: 10px;
         }
 
         /* Evento especial en la izquierda */
@@ -174,7 +180,7 @@
 
         .qr-image {
             width: 60px;
-            height: auto;
+            height: 60px;
             border-radius: 4px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
@@ -182,59 +188,372 @@
 </head>
 <body>
 
-<div class="ticket-container">
-    <div class="ticket">
-        <!-- Parte frontal del boleto -->
-        <div class="side front">
-            <div class="image-front"></div>
-        </div>
-        
-        <!-- Parte trasera del boleto -->
-        <div class="side back">
-            <!-- Encabezado -->
-            <div class="header">
-              <span>BIGHIT MUSIC</span>
-              <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
-              <span>BTS 2023</span>
-            </div>
-        
-            <!-- Título -->
-            <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
-            <div class="divider"></div>
-            
-            <!-- Información del evento -->
-            <div class="info">
-              <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
-              <p><strong>HORA:</strong> 8 PM</p>
-              <p><strong>DURACIÓN:</strong> 76 minutos</p>
-              <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+<div class="tickets-wrapper">
+    <div class="ticket-container">
+        <div class="ticket">
+            <!-- Parte frontal del boleto con imagen diferente -->
+            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/f1/79/45/f17945035742e6aea04a00e4522f07f0.jpg');">
+                <div class="image-front"></div>
             </div>
             
-            <!-- Cuenta regresiva -->
-            <div class="countdown">
-              <div>06</div>
-              <div>13</div>
-              <div>07</div>
-              <div>43</div>
-            </div>
-
-            <!-- Contenedor para evento especial y QR -->
-            <div class="event-qr-container">
-                <!-- Evento especial y usuario en el lado izquierdo -->
-                <div class="special-event">
-                    <p>EVENTO ESPECIAL</p>
-                    <p>@helt99</p>
+            <!-- Parte trasera del boleto -->
+            <div class="side back">
+                <!-- Encabezado -->
+                <div class="header">
+                  <span>BIGHIT MUSIC</span>
+                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
+                  <span>BTS 2023</span>
                 </div>
             
-                <!-- QR y redes sociales alineados a la derecha -->
-                <div class="qr-social">
-                  <div class="qr">SCAN ME</div>
-                  <img src="https://i.pinimg.com/564x/d8/11/10/d81110f74b45542aa26eddc290592ed8.jpg" alt="QR Code" class="qr-image">
+                <!-- Título -->
+                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
+                <div class="divider"></div>
+                
+                <!-- Información del evento -->
+                <div class="info">
+                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
+                  <p><strong>HORA:</strong> 8 PM</p>
+                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
+                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+                </div>
+                
+                <!-- Cuenta regresiva -->
+                <div class="countdown">
+                  <div>06</div>
+                  <div>13</div>
+                  <div>07</div>
+                  <div>43</div>
+                </div>
+
+                <!-- Contenedor para evento especial y QR -->
+                <div class="event-qr-container">
+                    <div class="special-event">
+                        <p>EVENTO ESPECIAL</p>
+                        <p>@helt99</p>
+                    </div>
+                    <div class="qr-social">
+                      <div class="qr">YOONGI</div>
+                      <img src="https://i.pinimg.com/564x/eb/15/73/eb15738c6013bd0d68aa2e26fc1f39dc.jpg" alt="QR Code" class="qr-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ticket-container">
+        <div class="ticket">
+            <!-- Parte frontal del boleto con imagen diferente -->
+            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/00/46/03/004603d5d4be4fa5554bca5258178369.jpg');">
+                <div class="image-front"></div>
+            </div>
+            
+            <!-- Parte trasera del boleto -->
+            <div class="side back">
+                <!-- Encabezado -->
+                <div class="header">
+                  <span>BIGHIT MUSIC</span>
+                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
+                  <span>BTS 2023</span>
+                </div>
+            
+                <!-- Título -->
+                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
+                <div class="divider"></div>
+                
+                <!-- Información del evento -->
+                <div class="info">
+                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
+                  <p><strong>HORA:</strong> 8 PM</p>
+                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
+                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+                </div>
+                
+                <!-- Cuenta regresiva -->
+                <div class="countdown">
+                  <div>06</div>
+                  <div>13</div>
+                  <div>07</div>
+                  <div>43</div>
+                </div>
+
+                <!-- Contenedor para evento especial y QR -->
+                <div class="event-qr-container">
+                    <div class="special-event">
+                        <p>EVENTO ESPECIAL</p>
+                        <p>@helt99</p>
+                    </div>
+                    <div class="qr-social">
+                      <div class="qr">TAEHYUNG</div>
+                      <img src="https://i.pinimg.com/564x/39/c4/83/39c483911ae307e6bad7f4ff8139d0f6.jpg" alt="QR Code" class="qr-image">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<div class="tickets-wrapper">
+    <div class="ticket-container">
+        <div class="ticket">
+            <!-- Parte frontal del boleto con imagen diferente -->
+            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/33/b6/9e/33b69ec77e14e1eed70a14779edb9c1a.jpg');">
+                <div class="image-front"></div>
+            </div>
+            
+            <!-- Parte trasera del boleto -->
+            <div class="side back">
+                <!-- Encabezado -->
+                <div class="header">
+                  <span>BIGHIT MUSIC</span>
+                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
+                  <span>BTS 2023</span>
+                </div>
+            
+                <!-- Título -->
+                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
+                <div class="divider"></div>
+                
+                <!-- Información del evento -->
+                <div class="info">
+                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
+                  <p><strong>HORA:</strong> 8 PM</p>
+                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
+                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+                </div>
+                
+                <!-- Cuenta regresiva -->
+                <div class="countdown">
+                  <div>06</div>
+                  <div>13</div>
+                  <div>07</div>
+                  <div>43</div>
+                </div>
+
+                <!-- Contenedor para evento especial y QR -->
+                <div class="event-qr-container">
+                    <div class="special-event">
+                        <p>EVENTO ESPECIAL</p>
+                        <p>@helt99</p>
+                    </div>
+                    <div class="qr-social">
+                      <div class="qr">JUNGKOOK</div>
+                      <img src="https://i.pinimg.com/564x/df/63/04/df6304934b9b426ad63fe812357800d1.jpg" alt="QR Code" class="qr-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ticket-container">
+        <div class="ticket">
+            <!-- Parte frontal del boleto con imagen diferente -->
+            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/01/f6/48/01f648570bb51026150f96a677c8edd3.jpg');">
+                <div class="image-front"></div>
+            </div>
+            
+            <!-- Parte trasera del boleto -->
+            <div class="side back">
+                <!-- Encabezado -->
+                <div class="header">
+                  <span>BIGHIT MUSIC</span>
+                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
+                  <span>BTS 2023</span>
+                </div>
+            
+                <!-- Título -->
+                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
+                <div class="divider"></div>
+                
+                <!-- Información del evento -->
+                <div class="info">
+                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
+                  <p><strong>HORA:</strong> 8 PM</p>
+                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
+                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+                </div>
+                
+                <!-- Cuenta regresiva -->
+                <div class="countdown">
+                  <div>06</div>
+                  <div>13</div>
+                  <div>07</div>
+                  <div>43</div>
+                </div>
+
+                <!-- Contenedor para evento especial y QR -->
+                <div class="event-qr-container">
+                    <div class="special-event">
+                        <p>EVENTO ESPECIAL</p>
+                        <p>@helt99</p>
+                    </div>
+                    <div class="qr-social">
+                      <div class="qr">J-HOPE</div>
+                      <img src="https://i.pinimg.com/564x/db/d8/58/dbd858f7f7b1aa926759eab821f7c4cf.jpg" alt="QR Code" class="qr-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tickets-wrapper">
+    <div class="ticket-container">
+        <div class="ticket">
+            <!-- Parte frontal del boleto con imagen diferente -->
+            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/e6/27/ee/e627ee221b92b45a33ba45e729dcfb1c.jpg');">
+                <div class="image-front"></div>
+            </div>
+            
+            <!-- Parte trasera del boleto -->
+            <div class="side back">
+                <!-- Encabezado -->
+                <div class="header">
+                  <span>BIGHIT MUSIC</span>
+                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
+                  <span>BTS 2023</span>
+                </div>
+            
+                <!-- Título -->
+                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
+                <div class="divider"></div>
+                
+                <!-- Información del evento -->
+                <div class="info">
+                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
+                  <p><strong>HORA:</strong> 8 PM</p>
+                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
+                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+                </div>
+                
+                <!-- Cuenta regresiva -->
+                <div class="countdown">
+                  <div>06</div>
+                  <div>13</div>
+                  <div>07</div>
+                  <div>43</div>
+                </div>
+
+                <!-- Contenedor para evento especial y QR -->
+                <div class="event-qr-container">
+                    <div class="special-event">
+                        <p>EVENTO ESPECIAL</p>
+                        <p>@helt99</p>
+                    </div>
+                    <div class="qr-social">
+                      <div class="qr">JIN</div>
+                      <img src="https://i.pinimg.com/236x/95/fd/fe/95fdfeaacf60576b750a08b75e843ecc.jpg" alt="QR Code" class="qr-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ticket-container">
+        <div class="ticket">
+            <!-- Parte frontal del boleto con imagen diferente -->
+            <div class="side front" style="background-image: url('https://i.pinimg.com/736x/36/b0/31/36b031afde0cbbe1f4ac54ffb85baa17.jpg');">
+                <div class="image-front"></div>
+            </div>
+            
+            <!-- Parte trasera del boleto -->
+            <div class="side back">
+                <!-- Encabezado -->
+                <div class="header">
+                  <span>BIGHIT MUSIC</span>
+                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
+                  <span>BTS 2023</span>
+                </div>
+            
+                <!-- Título -->
+                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
+                <div class="divider"></div>
+                
+                <!-- Información del evento -->
+                <div class="info">
+                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
+                  <p><strong>HORA:</strong> 8 PM</p>
+                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
+                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+                </div>
+                
+                <!-- Cuenta regresiva -->
+                <div class="countdown">
+                  <div>06</div>
+                  <div>13</div>
+                  <div>07</div>
+                  <div>43</div>
+                </div>
+
+                <!-- Contenedor para evento especial y QR -->
+                <div class="event-qr-container">
+                    <div class="special-event">
+                        <p>EVENTO ESPECIAL</p>
+                        <p>@helt99</p>
+                    </div>
+                    <div class="qr-social">
+                      <div class="qr">NAMJOON</div>
+                      <img src="https://i.pinimg.com/564x/43/7a/d5/437ad50dd0e92f57214adf3e6bc9ed59.jpg" alt="QR Code" class="qr-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="tickets-wrapper">
+    <div class="ticket-container">
+        <div class="ticket">
+            <!-- Parte frontal del boleto con imagen diferente -->
+            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/18/c3/d0/18c3d0c33afb10f66a0f39bcb098e321.jpg');">
+                <div class="image-front"></div>
+            </div>
+            
+            <!-- Parte trasera del boleto -->
+            <div class="side back">
+                <!-- Encabezado -->
+                <div class="header">
+                  <span>BIGHIT MUSIC</span>
+                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
+                  <span>BTS 2023</span>
+                </div>
+            
+                <!-- Título -->
+                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
+                <div class="divider"></div>
+                
+                <!-- Información del evento -->
+                <div class="info">
+                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
+                  <p><strong>HORA:</strong> 8 PM</p>
+                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
+                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
+                </div>
+                
+                <!-- Cuenta regresiva -->
+                <div class="countdown">
+                  <div>06</div>
+                  <div>13</div>
+                  <div>07</div>
+                  <div>43</div>
+                </div>
+
+                <!-- Contenedor para evento especial y QR -->
+                <div class="event-qr-container">
+                    <div class="special-event">
+                        <p>EVENTO ESPECIAL</p>
+                        <p>@helt99</p>
+                    </div>
+                    <div class="qr-social">
+                      <div class="qr">JIMIN</div>
+                      <img src="https://i.pinimg.com/236x/29/45/43/29454366799adda8962ee43894f561f7.jpg" alt="QR Code" class="qr-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 </body>
 </html>
