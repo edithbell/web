@@ -41,25 +41,48 @@
             50% { opacity: 1; }
         }
 
-        /* Sidebar Menu */
-        .menu {
+        /* Menu Icon */
+        .menu-icon {
             position: fixed;
             top: 20px;
             left: 20px;
             background: #444;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10000;
+        }
+        .menu-icon span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px 0;
+        }
+
+        /* Sidebar Menu */
+        .menu {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 200px;
+            height: 100%;
+            background: #333;
+            padding-top: 60px;
+            transition: left 0.3s ease;
         }
         .menu a {
             display: block;
             color: white;
             text-decoration: none;
-            padding: 10px;
-            margin: 5px 0;
+            padding: 15px 20px;
             transition: background 0.3s;
         }
         .menu a:hover {
             background: #555;
+        }
+        .menu.active {
+            left: 0;
         }
 
         /* Sections */
@@ -137,18 +160,6 @@
 
         /* Responsive Styles */
         @media (max-width: 768px) {
-            .menu {
-                top: 10px;
-                left: 10px;
-                padding: 5px;
-            }
-            .menu a {
-                padding: 8px;
-                font-size: 0.9rem;
-            }
-            .loading-text {
-                font-size: 1.5rem;
-            }
             .gallery {
                 flex-direction: column;
                 align-items: center;
@@ -166,8 +177,15 @@
         <div class="loading-text">Bienvenido a la Página</div>
     </div>
 
+    <!-- Menu Icon -->
+    <div class="menu-icon" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
     <!-- Sidebar Menu -->
-    <div class="menu">
+    <div class="menu" id="menu">
         <a href="#home" onclick="showSection('home')">HOME</a>
         <a href="#v" onclick="showSection('v')">V</a>
         <a href="#boletos" onclick="showSection('boletos')">BOLETOS</a>
@@ -214,11 +232,17 @@
             }, 2000);
         };
 
+        // Toggle Menu
+        function toggleMenu() {
+            document.getElementById('menu').classList.toggle('active');
+        }
+
         // Show Sections
         function showSection(sectionId) {
             const sections = document.querySelectorAll('.section');
             sections.forEach(section => section.style.display = 'none');
             document.getElementById(sectionId).style.display = 'block';
+            toggleMenu();
         }
 
         // Gallery Albums
@@ -247,10 +271,22 @@
             document.getElementById("modal").style.display = "none";
         }
 
-        function prevImage() {
-            currentIndex = (currentIndex > 0) ? currentIndex - 1 : currentAlbum.length - 1;
-            document.getElementById("albumImage").src = currentAlbum[currentIndex];
+        function nextImage() {
+            if (currentIndex < currentAlbum.length - 1) {
+                currentIndex++;
+                document.getElementById("albumImage").src = currentAlbum[currentIndex];
+            }
         }
+
+        function prevImage() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                document.getElementById("albumImage").src = currentAlbum[currentIndex];
+            }
+        }
+    </script>
+</body>
+</html>
 
         function nextImage() {
             currentIndex = (currentIndex < currentAlbum.length - 1) ? currentIndex + 1 : 0;
