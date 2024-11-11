@@ -3,557 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boleto 3D</title>
+    <title>Página Web</title>
     <style>
-        /* Contenedor principal para alinear los boletos en fila */
-        .tickets-wrapper {
-            display: flex;
-            justify-content: center;
-            gap: 20px; /* Espacio entre los boletos */
-            margin-top: 50px;
-        }
-
-        /* Contenedor del boleto */
-        .ticket-container {
-            perspective: 1000px;
-            width: 300px;
-            height: 500px;
-        }
-
-        /* Boleto y su giro */
-        .ticket {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transform: rotateY(0deg);
-            transition: transform 0.6s;
-        }
-
-        /* Efecto hover para girar el boleto */
-        .ticket-container:hover .ticket {
-            transform: rotateY(180deg);
-        }
-
-        /* Estilo de cada lado del boleto */
-        .side {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Parte frontal del boleto */
-        .front {
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Parte trasera del boleto */
-        .back {
-            background-color: #b78bc2;
-            color: #fff;
-            transform: rotateY(180deg);
-            padding: 15px;
+        /* General Styles */
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
             font-family: Arial, sans-serif;
         }
-
-        /* Encabezado */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #ddd;
-            margin-bottom: 5px;
+        body {
+            background-color: #222;
+            color: #fff;
+            overflow-x: hidden;
         }
 
-        .header img {
-            height: 35px;
-        }
-
-        /* Título en la parte trasera */
-        .title h1 {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: center;
-            color: #ffffff;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
-            margin: 5px 0;
-            letter-spacing: 1px;
-        }
-
-        /* Estilo de la línea divisoria */
-        .divider {
+        /* Loading Animation */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 1px;
-            background-color: #ccc;
-            margin: 8px 0;
-            opacity: 0.6;
-        }
-
-        /* Información del evento */
-        .info {
-            font-size: 14px;
-            line-height: 1.4;
-            margin-bottom: 10px;
-            flex-grow: 1;
-        }
-
-        .info p {
-            margin: 3px 0;
-            color: #e0e0e0;
-        }
-
-        .info p strong {
-            font-weight: bold;
-            color: #ffffff;
-        }
-
-        /* Cuenta regresiva */
-        .countdown {
+            height: 100%;
+            background-color: #333;
             display: flex;
             justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        .loading-text {
+            font-size: 2rem;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Sidebar Menu */
+        .menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #444;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 10px;
             margin: 5px 0;
-            gap: 4px;
+            transition: background 0.3s;
+        }
+        .menu a:hover {
+            background: #555;
         }
 
-        .countdown div {
-            font-size: 16px;
-            padding: 6px;
-            background-color: #704141;
-            border-radius: 6px;
-            color: #fff;
+        /* Sections */
+        .section {
+            display: none;
+            padding: 20px;
             text-align: center;
-            width: 35px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+        #home {
+            display: block;
         }
 
-        /* Contenedor para evento especial y QR */
-        .event-qr-container {
+        /* Gallery */
+        .gallery {
             display: flex;
-            justify-content: space-between;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+        .gallery img {
+            width: 100%;
+            max-width: 200px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Modal for album display */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
             align-items: center;
-            margin-top: 10px;
+            flex-direction: column;
+            padding: 20px;
         }
-
-        /* Evento especial en la izquierda */
-        .special-event {
-            font-size: 12px;
-            color: #ddd;
-            text-align: left;
-            padding-left: 5px;
+        .modal img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 10px;
+            margin-bottom: 20px;
         }
-
-        .special-event p {
-            margin: 0;
-        }
-
-        /* QR y redes sociales */
-        .qr-social {
+        .modal .controls {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 10px;
-            color: #ddd;
+            gap: 20px;
+        }
+        .modal button {
+            background-color: #555;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        .modal button:hover {
+            background-color: #777;
+        }
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
         }
 
-        .qr {
-            background: #ffffff;
-            color: #5a2828;
-            padding: 8px;
-            border-radius: 6px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-            font-size: 10px;
-        }
-
-        .qr-image {
-            width: 60px;
-            height: 60px;
-            border-radius: 4px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu {
+                top: 10px;
+                left: 10px;
+                padding: 5px;
+            }
+            .menu a {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+            .loading-text {
+                font-size: 1.5rem;
+            }
+            .gallery {
+                flex-direction: column;
+                align-items: center;
+            }
+            .gallery img {
+                max-width: 90%;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="tickets-wrapper">
-    <div class="ticket-container">
-        <div class="ticket">
-            <!-- Parte frontal del boleto con imagen diferente -->
-            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/f1/79/45/f17945035742e6aea04a00e4522f07f0.jpg');">
-                <div class="image-front"></div>
-            </div>
-            
-            <!-- Parte trasera del boleto -->
-            <div class="side back">
-                <!-- Encabezado -->
-                <div class="header">
-                  <span>BIGHIT MUSIC</span>
-                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
-                  <span>BTS 2023</span>
-                </div>
-            
-                <!-- Título -->
-                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
-                <div class="divider"></div>
-                
-                <!-- Información del evento -->
-                <div class="info">
-                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
-                  <p><strong>HORA:</strong> 8 PM</p>
-                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
-                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
-                </div>
-                
-                <!-- Cuenta regresiva -->
-                <div class="countdown">
-                  <div>06</div>
-                  <div>13</div>
-                  <div>07</div>
-                  <div>43</div>
-                </div>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-text">Bienvenido a la Página</div>
+    </div>
 
-                <!-- Contenedor para evento especial y QR -->
-                <div class="event-qr-container">
-                    <div class="special-event">
-                        <p>EVENTO ESPECIAL</p>
-                        <p>@helt99</p>
-                    </div>
-                    <div class="qr-social">
-                      <div class="qr">YOONGI</div>
-                      <img src="https://i.pinimg.com/564x/eb/15/73/eb15738c6013bd0d68aa2e26fc1f39dc.jpg" alt="QR Code" class="qr-image">
-                    </div>
-                </div>
-            </div>
+    <!-- Sidebar Menu -->
+    <div class="menu">
+        <a href="#home" onclick="showSection('home')">HOME</a>
+        <a href="#v" onclick="showSection('v')">V</a>
+        <a href="#boletos" onclick="showSection('boletos')">BOLETOS</a>
+    </div>
+
+    <!-- Sections -->
+    <div id="home" class="section">
+        <h1>Bienvenido a la Página de Inicio</h1>
+        <p>Esta es la sección HOME de la página.</p>
+    </div>
+
+    <div id="v" class="section">
+        <h1>Discografía de V</h1>
+        <div class="gallery">
+            <img src="https://i.pinimg.com/564x/4e/8b/4d/4e8b4da81fd3011ea1c3400e403faacc.jpg" alt="Album 1" onclick="openAlbum(1)">
+            <img src="https://i.pinimg.com/236x/40/5c/65/405c65f46cab0277e3f2b63579224781.jpg" alt="Album 2" onclick="openAlbum(2)">
+            <img src="https://i.pinimg.com/236x/1d/3f/ab/1d3fabf40438b5d9767c3d42f8294a9f.jpg" alt="Album 3" onclick="openAlbum(3)">
         </div>
     </div>
 
-    <div class="ticket-container">
-        <div class="ticket">
-            <!-- Parte frontal del boleto con imagen diferente -->
-            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/00/46/03/004603d5d4be4fa5554bca5258178369.jpg');">
-                <div class="image-front"></div>
-            </div>
-            
-            <!-- Parte trasera del boleto -->
-            <div class="side back">
-                <!-- Encabezado -->
-                <div class="header">
-                  <span>BIGHIT MUSIC</span>
-                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
-                  <span>BTS 2023</span>
-                </div>
-            
-                <!-- Título -->
-                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
-                <div class="divider"></div>
-                
-                <!-- Información del evento -->
-                <div class="info">
-                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
-                  <p><strong>HORA:</strong> 8 PM</p>
-                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
-                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
-                </div>
-                
-                <!-- Cuenta regresiva -->
-                <div class="countdown">
-                  <div>06</div>
-                  <div>13</div>
-                  <div>07</div>
-                  <div>43</div>
-                </div>
-
-                <!-- Contenedor para evento especial y QR -->
-                <div class="event-qr-container">
-                    <div class="special-event">
-                        <p>EVENTO ESPECIAL</p>
-                        <p>@helt99</p>
-                    </div>
-                    <div class="qr-social">
-                      <div class="qr">TAEHYUNG</div>
-                      <img src="https://i.pinimg.com/564x/39/c4/83/39c483911ae307e6bad7f4ff8139d0f6.jpg" alt="QR Code" class="qr-image">
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="boletos" class="section">
+        <h1>Boletos</h1>
+        <p>Aquí estarán los boletos para el evento.</p>
     </div>
-</div>
 
-
-
-<div class="tickets-wrapper">
-    <div class="ticket-container">
-        <div class="ticket">
-            <!-- Parte frontal del boleto con imagen diferente -->
-            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/33/b6/9e/33b69ec77e14e1eed70a14779edb9c1a.jpg');">
-                <div class="image-front"></div>
-            </div>
-            
-            <!-- Parte trasera del boleto -->
-            <div class="side back">
-                <!-- Encabezado -->
-                <div class="header">
-                  <span>BIGHIT MUSIC</span>
-                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
-                  <span>BTS 2023</span>
-                </div>
-            
-                <!-- Título -->
-                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
-                <div class="divider"></div>
-                
-                <!-- Información del evento -->
-                <div class="info">
-                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
-                  <p><strong>HORA:</strong> 8 PM</p>
-                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
-                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
-                </div>
-                
-                <!-- Cuenta regresiva -->
-                <div class="countdown">
-                  <div>06</div>
-                  <div>13</div>
-                  <div>07</div>
-                  <div>43</div>
-                </div>
-
-                <!-- Contenedor para evento especial y QR -->
-                <div class="event-qr-container">
-                    <div class="special-event">
-                        <p>EVENTO ESPECIAL</p>
-                        <p>@helt99</p>
-                    </div>
-                    <div class="qr-social">
-                      <div class="qr">JUNGKOOK</div>
-                      <img src="https://i.pinimg.com/564x/df/63/04/df6304934b9b426ad63fe812357800d1.jpg" alt="QR Code" class="qr-image">
-                    </div>
-                </div>
-            </div>
+    <!-- Modal for album display -->
+    <div class="modal" id="modal">
+        <span class="close" onclick="closeAlbum()">×</span>
+        <img id="albumImage" src="" alt="Album Image">
+        <div class="controls">
+            <button onclick="prevImage()">⟨ Anterior</button>
+            <button onclick="nextImage()">Siguiente ⟩</button>
         </div>
     </div>
 
-    <div class="ticket-container">
-        <div class="ticket">
-            <!-- Parte frontal del boleto con imagen diferente -->
-            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/01/f6/48/01f648570bb51026150f96a677c8edd3.jpg');">
-                <div class="image-front"></div>
-            </div>
-            
-            <!-- Parte trasera del boleto -->
-            <div class="side back">
-                <!-- Encabezado -->
-                <div class="header">
-                  <span>BIGHIT MUSIC</span>
-                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
-                  <span>BTS 2023</span>
-                </div>
-            
-                <!-- Título -->
-                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
-                <div class="divider"></div>
-                
-                <!-- Información del evento -->
-                <div class="info">
-                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
-                  <p><strong>HORA:</strong> 8 PM</p>
-                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
-                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
-                </div>
-                
-                <!-- Cuenta regresiva -->
-                <div class="countdown">
-                  <div>06</div>
-                  <div>13</div>
-                  <div>07</div>
-                  <div>43</div>
-                </div>
+    <script>
+        // Loading Screen
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = 0;
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 500);
+            }, 2000);
+        };
 
-                <!-- Contenedor para evento especial y QR -->
-                <div class="event-qr-container">
-                    <div class="special-event">
-                        <p>EVENTO ESPECIAL</p>
-                        <p>@helt99</p>
-                    </div>
-                    <div class="qr-social">
-                      <div class="qr">J-HOPE</div>
-                      <img src="https://i.pinimg.com/564x/db/d8/58/dbd858f7f7b1aa926759eab821f7c4cf.jpg" alt="QR Code" class="qr-image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        // Show Sections
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+        }
 
-<div class="tickets-wrapper">
-    <div class="ticket-container">
-        <div class="ticket">
-            <!-- Parte frontal del boleto con imagen diferente -->
-            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/e6/27/ee/e627ee221b92b45a33ba45e729dcfb1c.jpg');">
-                <div class="image-front"></div>
-            </div>
-            
-            <!-- Parte trasera del boleto -->
-            <div class="side back">
-                <!-- Encabezado -->
-                <div class="header">
-                  <span>BIGHIT MUSIC</span>
-                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
-                  <span>BTS 2023</span>
-                </div>
-            
-                <!-- Título -->
-                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
-                <div class="divider"></div>
-                
-                <!-- Información del evento -->
-                <div class="info">
-                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
-                  <p><strong>HORA:</strong> 8 PM</p>
-                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
-                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
-                </div>
-                
-                <!-- Cuenta regresiva -->
-                <div class="countdown">
-                  <div>06</div>
-                  <div>13</div>
-                  <div>07</div>
-                  <div>43</div>
-                </div>
+        // Gallery Albums
+        const albums = {
+            1: [
+                "https://i.pinimg.com/236x/ec/f5/38/ecf538eae74c8a8349721d50e72be074.jpg",
+                "https://i.pinimg.com/236x/b1/ea/7a/b1ea7ab2981909d2ad434971dcd6599c.jpg",
+                "https://i.pinimg.com/236x/64/b0/c6/64b0c6788802257373bfba8ff20a1673.jpg",
+                "https://i.pinimg.com/236x/2c/6d/1a/2c6d1a461cae4546fdeadda558590104.jpg"
+            ],
+            2: [],
+            3: []
+        };
 
-                <!-- Contenedor para evento especial y QR -->
-                <div class="event-qr-container">
-                    <div class="special-event">
-                        <p>EVENTO ESPECIAL</p>
-                        <p>@helt99</p>
-                    </div>
-                    <div class="qr-social">
-                      <div class="qr">JIN</div>
-                      <img src="https://i.pinimg.com/236x/95/fd/fe/95fdfeaacf60576b750a08b75e843ecc.jpg" alt="QR Code" class="qr-image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        let currentAlbum = [];
+        let currentIndex = 0;
 
-    <div class="ticket-container">
-        <div class="ticket">
-            <!-- Parte frontal del boleto con imagen diferente -->
-            <div class="side front" style="background-image: url('https://i.pinimg.com/736x/36/b0/31/36b031afde0cbbe1f4ac54ffb85baa17.jpg');">
-                <div class="image-front"></div>
-            </div>
-            
-            <!-- Parte trasera del boleto -->
-            <div class="side back">
-                <!-- Encabezado -->
-                <div class="header">
-                  <span>BIGHIT MUSIC</span>
-                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
-                  <span>BTS 2023</span>
-                </div>
-            
-                <!-- Título -->
-                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
-                <div class="divider"></div>
-                
-                <!-- Información del evento -->
-                <div class="info">
-                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
-                  <p><strong>HORA:</strong> 8 PM</p>
-                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
-                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
-                </div>
-                
-                <!-- Cuenta regresiva -->
-                <div class="countdown">
-                  <div>06</div>
-                  <div>13</div>
-                  <div>07</div>
-                  <div>43</div>
-                </div>
+        function openAlbum(albumNumber) {
+            currentAlbum = albums[albumNumber];
+            currentIndex = 0;
+            document.getElementById("albumImage").src = currentAlbum[currentIndex];
+            document.getElementById("modal").style.display = "flex";
+        }
 
-                <!-- Contenedor para evento especial y QR -->
-                <div class="event-qr-container">
-                    <div class="special-event">
-                        <p>EVENTO ESPECIAL</p>
-                        <p>@helt99</p>
-                    </div>
-                    <div class="qr-social">
-                      <div class="qr">NAMJOON</div>
-                      <img src="https://i.pinimg.com/564x/43/7a/d5/437ad50dd0e92f57214adf3e6bc9ed59.jpg" alt="QR Code" class="qr-image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        function closeAlbum() {
+            document.getElementById("modal").style.display = "none";
+        }
 
-<div class="tickets-wrapper">
-    <div class="ticket-container">
-        <div class="ticket">
-            <!-- Parte frontal del boleto con imagen diferente -->
-            <div class="side front" style="background-image: url('https://i.pinimg.com/564x/18/c3/d0/18c3d0c33afb10f66a0f39bcb098e321.jpg');">
-                <div class="image-front"></div>
-            </div>
-            
-            <!-- Parte trasera del boleto -->
-            <div class="side back">
-                <!-- Encabezado -->
-                <div class="header">
-                  <span>BIGHIT MUSIC</span>
-                  <img src="https://static.vecteezy.com/system/resources/previews/027/127/525/original/bts-logo-bts-icon-transparent-free-png.png" alt="BTS">
-                  <span>BTS 2023</span>
-                </div>
-            
-                <!-- Título -->
-                <div class="title"><h1>BTS Map Of The Soul ON:E</h1></div>
-                <div class="divider"></div>
-                
-                <!-- Información del evento -->
-                <div class="info">
-                  <p><strong>FECHA:</strong> 25 de diciembre 2024</p>
-                  <p><strong>HORA:</strong> 8 PM</p>
-                  <p><strong>DURACIÓN:</strong> 76 minutos</p>
-                  <p><strong>CAST:</strong> RM, Jin, Suga, J-Hope, Jimin, V, Jungkook</p>
-                </div>
-                
-                <!-- Cuenta regresiva -->
-                <div class="countdown">
-                  <div>06</div>
-                  <div>13</div>
-                  <div>07</div>
-                  <div>43</div>
-                </div>
+        function prevImage() {
+            currentIndex = (currentIndex > 0) ? currentIndex - 1 : currentAlbum.length - 1;
+            document.getElementById("albumImage").src = currentAlbum[currentIndex];
+        }
 
-                <!-- Contenedor para evento especial y QR -->
-                <div class="event-qr-container">
-                    <div class="special-event">
-                        <p>EVENTO ESPECIAL</p>
-                        <p>@helt99</p>
-                    </div>
-                    <div class="qr-social">
-                      <div class="qr">JIMIN</div>
-                      <img src="https://i.pinimg.com/236x/29/45/43/29454366799adda8962ee43894f561f7.jpg" alt="QR Code" class="qr-image">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
+        function nextImage() {
+            currentIndex = (currentIndex < currentAlbum.length - 1) ? currentIndex + 1 : 0;
+            document.getElementById("albumImage").src = currentAlbum[currentIndex];
+        }
+    </script>
 </body>
 </html>
+
